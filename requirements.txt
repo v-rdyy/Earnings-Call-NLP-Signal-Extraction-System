@@ -1,0 +1,22 @@
+# Core data processing
+pandas>=2.2.0
+numpy>=1.26.0
+
+# Text processing and NLP
+nltk>=3.8.1
+scikit-learn>=1.4.0
+
+# Financial data (for stock prices)
+yfinance>=0.2.28
+
+# Visualization
+matplotlib>=3.8.0
+seaborn>=0.13.0
+
+# Jupyter for exploration
+jupyter>=1.0.0
+ipykernel>=6.25.0
+
+# Utilities
+python-dotenv>=1.0.0
+tqdm>=4.65.0

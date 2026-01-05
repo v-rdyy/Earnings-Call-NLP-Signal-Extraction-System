@@ -1,0 +1,34 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+
+# Data files (optional - you might want to track sample data)
+# Uncomment if you don't want to track data files:
+# data/raw/*.csv
+# data/processed/
+# data/features/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Outputs
+outputs/models/
+outputs/results/*.pkl
+*.log
+
