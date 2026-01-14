@@ -5,6 +5,7 @@ numpy>=1.26.0
 # Text processing and NLP
 nltk>=3.8.1
 scikit-learn>=1.4.0
+textblob>=0.17.1
 
 # Financial data (for stock prices)
 yfinance>=0.2.28
