@@ -17,8 +17,8 @@ This is not about predicting stock direction, but about extracting reliable sign
 - `src/`: Source code modules
   - `data/`: Data generation, loading, and alignment
   - `features/`: NLP feature extraction
-  - `models/`: Model training (coming soon)
-  - `evaluation/`: Evaluation scripts (coming soon)
+  - `models/`: Model training, calibration, and data preparation
+  - `evaluation/`: Model evaluation and event study analysis
 - `notebooks/`: Test scripts and exploration
 - `outputs/`: Saved models and results
 
@@ -49,11 +49,17 @@ This is not about predicting stock direction, but about extracting reliable sign
    - Uncertainty language detection
    - Forward-looking vs backward-looking language analysis
 
-### Next Steps
+4. **Probabilistic Modeling** (`src/models/`)
+   - Data preparation and time-aware train/test split
+   - Logistic regression and gradient boosting models
+   - Probability calibration (isotonic regression)
+   - Outputs calibrated probabilities, not binary predictions
 
-- Probabilistic modeling (logistic regression, gradient boosting)
-- Model calibration and reliability curves
-- Event study evaluation methodology
+5. **Model Evaluation** (`src/evaluation/`)
+   - Binary and probabilistic evaluation metrics
+   - Probability bucket analysis (conditional distributions)
+   - Volatility reaction analysis (event study methodology)
+   - Reliability diagrams and calibration measurement
 
 ## Usage
 
@@ -77,6 +83,27 @@ from src.features.nlp_features import add_nlp_features_to_dataframe
 features_df = add_nlp_features_to_dataframe(aligned)
 ```
 
+### Run Complete Pipeline
+```bash
+python3 notebooks/run_complete_pipeline.py
+```
+
+This runs the complete end-to-end workflow:
+1. Load and align data
+2. Extract NLP features
+3. Prepare data for modeling
+4. Train models (logistic regression, gradient boosting)
+5. Calibrate probabilities
+6. Evaluate performance (binary, probabilistic, event study)
+
+## Key Features
+
+- **Probabilistic Modeling**: Models output probabilities (0.0 to 1.0), not binary predictions
+- **Calibration**: Probabilities are calibrated to be reliable (if model says 60%, it's right 60% of the time)
+- **Event Study Evaluation**: Conditional return distributions and volatility reaction analysis
+- **Time-Aware**: Strict time-series discipline (no data leakage)
+- **Interpretable Features**: NLP features are interpretable (sentiment, uncertainty, forward-looking language)
+
 ## Project Status
 
-In Development - Data pipeline and NLP feature extraction complete. Probabilistic modeling in progress.
+Complete - All modules implemented and tested. Ready for analysis and experimentation.
