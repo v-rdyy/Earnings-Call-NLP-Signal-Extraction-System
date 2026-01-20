@@ -8,11 +8,13 @@ venv/
 env/
 ENV/
 
-# Data files (optional - you might want to track sample data)
-# Uncomment if you don't want to track data files:
-# data/raw/*.csv
-# data/processed/
-# data/features/
+# Data files (can be regenerated)
+data/raw/*.csv
+data/processed/
+data/features/
+
+# SEC EDGAR filings (can be regenerated)
+sec-edgar-filings/
 
 # Jupyter
 .ipynb_checkpoints/
@@ -27,8 +29,11 @@ ENV/
 .DS_Store
 Thumbs.db
 
-# Outputs
+# Outputs (models can be regenerated)
 outputs/models/
-outputs/results/*.pkl
+outputs/results/
 *.log
 
+# Python cache
+__pycache__/
+*.pyc
