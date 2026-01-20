@@ -36,7 +36,14 @@ def prepare_modeling_data(df, target_column='return_1d', feature_columns=None):
             'uncertainty_count', 'uncertainty_density',
             'forward_count', 'forward_density',
             'backward_count', 'backward_density',
-            'forward_backward_ratio'
+            'forward_backward_ratio',
+            'guidance_count', 'guidance_density',
+            'beat_miss_count', 'beat_miss_density',
+            'surprise_count', 'surprise_density',
+            'financial_perf_count', 'financial_perf_density',
+            'risk_loss_count', 'risk_loss_density',
+            'char_count', 'word_count', 'avg_word_length',
+            'sentence_count', 'avg_sentence_length'
         ]
     
     missing_features = [col for col in feature_columns if col not in df.columns]
@@ -55,6 +62,58 @@ def prepare_modeling_data(df, target_column='return_1d', feature_columns=None):
     print(f"Removed {len(df) - len(X_clean)} samples with missing values")
     
     return X_clean, y_clean
+
+
+def select_features_by_importance(X, y, model_type='gradient_boosting', n_features=20, random_state=42):
+    """
+    Select top N most important features based on a quick model fit.
+    
+    This helps reduce overfitting by keeping only the most predictive features.
+    
+    Parameters:
+    -----------
+    X : pd.DataFrame
+        Features DataFrame
+    y : pd.Series
+        Target Series
+    model_type : str
+        Type of model to use for feature selection: 'gradient_boosting' or 'logistic_regression'
+    n_features : int
+        Number of top features to keep (default: 20)
+    random_state : int
+        Random state for reproducibility
+        
+    Returns:
+    --------
+    list
+        List of selected feature names
+    """
+    
+    from sklearn.ensemble import GradientBoostingClassifier
+    from sklearn.linear_model import LogisticRegression
+    from sklearn.preprocessing import StandardScaler
+    
+    if model_type == 'gradient_boosting':
+        model = GradientBoostingClassifier(n_estimators=50, max_depth=3, random_state=random_state)
+        model.fit(X, y)
+        importances = model.feature_importances_
+    elif model_type == 'logistic_regression':
+        scaler = StandardScaler()
+        X_scaled = scaler.fit_transform(X)
+        model = LogisticRegression(random_state=random_state, max_iter=500)
+        model.fit(X_scaled, y)
+        importances = np.abs(model.coef_[0])
+    else:
+        raise ValueError(f"Unknown model_type: {model_type}")
+    
+    feature_importance = pd.DataFrame({
+        'feature': X.columns,
+        'importance': importances
+    }).sort_values('importance', ascending=False)
+    
+    selected_features = feature_importance.head(n_features)['feature'].tolist()
+    
+    return selected_features
 
 
 def time_aware_train_test_split(X, y, dates, test_size=0.2):

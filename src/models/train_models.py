@@ -137,3 +137,44 @@ def train_gradient_boosting(X_train, y_train_binary, X_test=None):
     print(f"Positive class rate: {y_train_binary.mean():.2%}")
     
     return result
+
+
+def get_feature_importance(model, feature_names, model_type='gradient_boosting'):
+    """
+    Extract feature importance from trained model.
+    
+    For gradient boosting: Uses built-in feature_importances_
+    For logistic regression: Uses absolute value of coefficients
+    
+    Parameters:
+    -----------
+    model : Trained model
+        Either GradientBoostingClassifier or LogisticRegression
+    feature_names : list
+        List of feature names (must match order in training data)
+    model_type : str
+        Type of model: 'gradient_boosting' or 'logistic_regression'
+        
+    Returns:
+    --------
+    pd.DataFrame
+        DataFrame with features and their importance scores, sorted by importance
+    """
+    
+    if model_type == 'gradient_boosting':
+        importances = model.feature_importances_
+    elif model_type == 'logistic_regression':
+        importances = np.abs(model.coef_[0])
+    else:
+        raise ValueError(f"Unknown model_type: {model_type}")
+    
+    feature_importance_df = pd.DataFrame({
+        'feature': feature_names,
+        'importance': importances
+    }).sort_values('importance', ascending=False)
+    
+    feature_importance_df['importance_pct'] = (
+        feature_importance_df['importance'] / feature_importance_df['importance'].sum() * 100
+    )
+    
+    return feature_importance_df

@@ -2,7 +2,7 @@ from datetime import timedelta
 import pandas as pd
 import os
 
-def load_transcripts(file_path='data/raw/sample_transcripts.csv'):
+def load_transcripts(file_path='data/raw/real_transcripts.csv'):
     if not os.path.exists(file_path):
         raise FileNotFoundError(f"Transcripts file not found: {file_path}")
 
@@ -13,7 +13,7 @@ def load_transcripts(file_path='data/raw/sample_transcripts.csv'):
     print(f"Loaded {len(df)} transcripts from {file_path}")
     return df
 
-def load_prices(file_path='data/raw/sample_prices.csv'):
+def load_prices(file_path='data/raw/real_prices.csv'):
     if not os.path.exists(file_path):
         raise FileNotFoundError(f"Prices file not found: {file_path}")
 
