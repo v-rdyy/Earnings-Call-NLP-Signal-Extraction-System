@@ -2,11 +2,18 @@
 
 ## Project Overview
 
-An ML system that extracts probabilistic language-based signals from earnings call transcripts and evaluates how those signals relate to post-earnings market behavior under uncertainty.
+An interpretable ML system that extracts probabilistic language-based uncertainty signals from earnings call transcripts and evaluates how those signals relate to post-earnings market behavior under uncertainty.
 
 **Core Question:** Does the way management speaks during earnings calls correlate with volatility and return behavior afterward — and how reliably?
 
 This is not about predicting stock direction, but about extracting reliable signals from language and evaluating them correctly.
+
+## TL;DR
+
+- Built an end-to-end NLP system to extract uncertainty signals from earnings disclosures
+- Found language predicts post-earnings volatility better than return direction (+8.7% ROC-AUC)
+- Used time-aware splits, calibration, and event studies for realistic evaluation
+- Conclusion: language provides weak but persistent signals about risk, not direction
 
 ## Key Finding
 
@@ -131,7 +138,7 @@ A lightweight Streamlit interface to inspect extracted NLP features and probabil
 - **Target**: Volatility Spike Detection (volatility_change > 75th percentile)
 - **ROC-AUC**: 0.6352 (63.52%)
 - **Accuracy**: 70.93%
-- **Calibration Error**: 0.0000 (perfectly calibrated on training data)
+- **Calibration Error**: ~0.000 (isotonic calibration on training data)
 
 **Interpretation:**
 - Above random chance (50%) but not production-ready
@@ -177,7 +184,7 @@ The system extracts 25 interpretable features:
 
 ### 3. Calibration Success
 
-- Calibration error → 0.0000 (perfect calibration on training data)
+- Calibration error → ~0.000 (isotonic calibration on training data)
 - Interpretation: When model says 60% probability, it's right 60% of the time (on training data)
 
 ## Error Analysis
